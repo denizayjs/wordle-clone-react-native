@@ -2,34 +2,51 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from '@/assets/images/wordle-icon.svg';
 import { Link } from 'expo-router';
 import { format } from 'date-fns';
+import { useColorScheme } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import ThemeText from '@/components/ThemeText';
 
 export default function Index() {
+  const colorScheme = useColorScheme();
+  const backgroundColor = Colors[colorScheme ?? 'light'].background;
+  const textColor = Colors[colorScheme ?? 'light'].text;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.header}>
         <Icon width={100} height={70} />
-        <Text style={styles.title}>Wordle</Text>
-        <Text style={styles.text}>Get 6 changes to guess a 5-letter word.</Text>
+        <ThemeText style={styles.title}>Wordle</ThemeText>
+        <ThemeText style={styles.text}>
+          Get 6 changes to guess a 5-letter word.
+        </ThemeText>
       </View>
       <View style={styles.menu}>
-        <Link href={'/game'} style={[styles.btn, styles.primaryItem]} asChild>
+        <Link
+          href={'/game'}
+          style={[
+            styles.btn,
+            // styles.primaryItem,
+            { backgroundColor: colorScheme === 'light' ? '#000' : '#4a4a4a' },
+          ]}
+          asChild
+        >
           <TouchableOpacity>
             <Text style={[styles.btnText, styles.primaryText]}>Play</Text>
           </TouchableOpacity>
         </Link>
-        <TouchableOpacity style={[styles.btn]}>
-          <Text style={[styles.btnText]}>Log In</Text>
+        <TouchableOpacity style={[styles.btn, { borderColor: textColor }]}>
+          <ThemeText style={[styles.btnText]}>Log In</ThemeText>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.btn]}>
-          <Text style={[styles.btnText]}>Subscribe</Text>
+        <TouchableOpacity style={[styles.btn, { borderColor: textColor }]}>
+          <ThemeText style={[styles.btnText]}>Subscribe</ThemeText>
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>
-        <Text style={styles.footerDate}>
+        <ThemeText style={styles.footerDate}>
           {format(new Date(), 'MMMM d, yyyy ')}
-        </Text>
-        <Text style={styles.footerText}>No. 1151</Text>
-        <Text style={styles.footerText}>Edited by Deniz AY</Text>
+        </ThemeText>
+        <ThemeText style={styles.footerText}>No. 1151</ThemeText>
+        <ThemeText style={styles.footerText}>Edited by Deniz AY</ThemeText>
       </View>
     </View>
   );
@@ -76,7 +93,7 @@ const styles = StyleSheet.create({
     fontWeight: 'semibold',
     color: '#333',
   },
-  primaryItem: { backgroundColor: '#000' },
+  //   primaryItem: { backgroundColor: '#000' },
   primaryText: { color: '#fff' },
   footer: {
     alignItems: 'center',
