@@ -5,14 +5,23 @@ import { format } from 'date-fns';
 import { useColorScheme } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import ThemeText from '@/components/ThemeText';
+import { useCallback, useRef } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import SubscribeModal from '@/components/SubscribeModal';
 
 export default function Index() {
   const colorScheme = useColorScheme();
   const backgroundColor = Colors[colorScheme ?? 'light'].background;
   const textColor = Colors[colorScheme ?? 'light'].text;
 
+  const subscribeModalRef = useRef<BottomSheetModal>(null);
+
+  const handlePresentSubscribeModalPress = () =>
+    subscribeModalRef.current?.present();
+
   return (
     <View style={[styles.container, { backgroundColor }]}>
+      <SubscribeModal ref={subscribeModalRef} />
       <View style={styles.header}>
         <Icon width={100} height={70} />
         <ThemeText style={styles.title}>Wordle</ThemeText>
@@ -37,7 +46,10 @@ export default function Index() {
         <TouchableOpacity style={[styles.btn, { borderColor: textColor }]}>
           <ThemeText style={[styles.btnText]}>Log In</ThemeText>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.btn, { borderColor: textColor }]}>
+        <TouchableOpacity
+          style={[styles.btn, { borderColor: textColor }]}
+          onPress={handlePresentSubscribeModalPress}
+        >
           <ThemeText style={[styles.btnText]}>Subscribe</ThemeText>
         </TouchableOpacity>
       </View>
