@@ -1,5 +1,5 @@
 import { Stack, useRouter } from 'expo-router';
-//import { useFonts } from 'expo-font';
+
 import * as SplashScreen from 'expo-splash-screen';
 import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo';
 import { useEffect } from 'react';
@@ -21,8 +21,11 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { tokenCache } from '@/utils/cache';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { LogBox } from 'react-native';
 
 import Logo from '@/assets/images/nyt-logo.svg';
+
+LogBox.ignoreAllLogs();
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -79,6 +82,18 @@ export default function RootLayout() {
                         />
                       </TouchableOpacity>
                     ),
+                  }}
+                />
+                <Stack.Screen
+                  name='game'
+                  options={{
+                    headerBackTitle: 'Wordle',
+                    headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
+                    title: '',
+                    headerBackTitleStyle: {
+                      fontFamily: 'FrankRuhlLibre_800ExtraBold',
+                      fontSize: 26,
+                    },
                   }}
                 />
               </Stack>
